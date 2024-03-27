@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:FoodFactMauiApp.Model"
+             xmlns:viewmodel="clr-namespace:FoodFactMauiApp.ViewModel"
+             x:DataType="viewmodel:ProductDetailsViewModel"
+             x:Class="FoodFactMauiApp.View.DetailsPage"
+             Title="{Binding Product.ProductName}">
+
+    <ScrollView>
+        <VerticalStackLayout>
+            <Grid ColumnDefinitions="*, Auto, *"
+                  RowDefinitions="160, Auto">
+                
+                
+            </Grid>
+            
+            <Label 
+         Text="Welcome to .NET MAUI!"
+         VerticalOptions="Center" 
+         HorizontalOptions="Center" />
+        </VerticalStackLayout>
+    </ScrollView>
+    
+   
+</ContentPage>
