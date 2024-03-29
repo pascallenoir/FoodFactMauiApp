@@ -36,5 +36,19 @@ public class ProductServices
 
         return products;
     }
+
+    public async Task<List<Product>> SearchProductAsync(string searchTerm)
+    {
+        var url = $"{BASE_SEARCH_URL}&tag_contains_0=contains&tagtype_0=categories" +
+            $"&tag_0={searchTerm}&tagtype_1=label&page_size=10";
+
+        var response = await client.GetAsync(url);
+
+        var products = await GetProductAsync(response);
+
+        return products;
+    }
+
+
 }
 

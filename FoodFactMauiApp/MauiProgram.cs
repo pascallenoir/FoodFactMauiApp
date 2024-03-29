@@ -1,32 +1,35 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace FoodFactMauiApp
+namespace FoodFactMauiApp;
+
+public static class MauiProgram
 {
-    public static class MauiProgram
+    public static MauiApp CreateMauiApp()
     {
-        public static MauiApp CreateMauiApp()
-        {
-            var builder = MauiApp.CreateBuilder();
-            builder
-                .UseMauiApp<App>()
-                .ConfigureFonts(fonts =>
-                {
-                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                });
-            builder.Services.AddSingleton<ProductServices>();
+        var builder = MauiApp.CreateBuilder();
+        builder
+            .UseMauiApp<App>()
+            .ConfigureFonts(fonts =>
+            {
+                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+            });
 
-            builder.Services.AddSingleton<ProductViewModel>();
-            builder.Services.AddSingleton<MainPage>(); 
+        builder.Services.AddSingleton<ProductServices>();
 
-            builder.Services.AddTransient<ProductDetailsViewModel>();
-            builder.Services.AddTransient<DetailsPage>();
+        builder.Services.AddSingleton<ProductViewModel>();
+        builder.Services.AddTransient<MainPage>(); 
+
+        builder.Services.AddTransient<ProductDetailsViewModel>();
+        builder.Services.AddTransient<DetailsPage>();
+
+        builder.Services.AddSingleton<ProductSearchViewModel>();
+        builder.Services.AddSingleton<SearchPage>();
 
 #if DEBUG
-            builder.Logging.AddDebug();
+        builder.Logging.AddDebug();
 #endif
 
-            return builder.Build();
-        }
+        return builder.Build();
     }
 }

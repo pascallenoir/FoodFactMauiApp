@@ -1,15 +1,27 @@
-﻿namespace FoodFactMauiApp.ViewModel;
+﻿using Microsoft.Maui.Graphics;
 
+namespace FoodFactMauiApp.ViewModel;
+
+[QueryProperty("SearchTerm", "SearchTerm")]
 public partial class ProductViewModel : BaseViewModel
 {
     ProductServices productServices;
 
-    public ObservableCollection<Product> Products { get; set; } = new();
+    public ObservableCollection<Product> Products { get; } = new();
+
+    public ObservableCollection<Product> SearchedProdutcs { get; } = new();
 
     public bool FirstRun { get; set; } = true;
 
     [ObservableProperty]
     bool isRefreshing;
+
+    [ObservableProperty]
+    string searchTerm;
+
+    [ObservableProperty]
+    string searchedTitle;
+
 
     public ProductViewModel(ProductServices productServices)
     {
@@ -62,12 +74,39 @@ public partial class ProductViewModel : BaseViewModel
         });
     }
 
-    public async void OnAppearing()
+    [RelayCommand]
+    async Task SearchProductAsync()
     {
-       if (FirstRun && GetRandomProductsCommand.CanExecute(null)) 
+        if (IsBusy) 
+            return;
+
+        try
         {
-            await GetRandomProductsCommand.ExecuteAsync(null);
-            FirstRun = false;
+            IsBusy = true;
+
+            SearchedTitle = SearchTerm;
+            Title = SearchedTitle;
+
+            SearchedProdutcs.Clear();
+
+            var searchs = await productServices.SearchProductAsync(SearchTerm);
+            foreach (var item in searchs)
+            {
+                SearchedProdutcs.Add(item);
+            }
+                
+            SearchTerm = null;
         }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+            await Shell.Current.DisplayAlert("Erreur", "Impossible de fair une recherche de produit", "Ok");
+        }
+        finally
+        {
+            IsBusy = false;
+        } 
+
     }
+
 }
