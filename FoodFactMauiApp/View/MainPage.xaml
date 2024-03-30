@@ -17,7 +17,6 @@
             
             <CollectionView x:Name="productsCollection"
                             BackgroundColor="Transparent"
-                            ItemsSource="{Binding Products}"
                             SelectionMode="None">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical"/>
