@@ -71,6 +71,7 @@
         <Button Grid.Row="3"
                 Text="Effacer l'historique"
                 HorizontalOptions="Center"
+                Command="{Binding ClearSearchTermsHistoryCommand}"
                 IsVisible="{Binding isSearchTermsHistoryNotEmpty}"
                 IsEnabled="{Binding IsNotBusy}"/>
 

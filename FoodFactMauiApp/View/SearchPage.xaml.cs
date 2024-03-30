@@ -3,6 +3,8 @@ namespace FoodFactMauiApp.View;
 public partial class SearchPage : ContentPage
 {
     ProductSearchViewModel viewModel;
+
+
     public SearchPage(ProductSearchViewModel productSearchViewModel)
 	{
 		InitializeComponent();

@@ -16,7 +16,7 @@ public class ProductServices
     {
         var page = new Random().Next(1, 1000);
         
-        var url = $"{BASE_SEARCH_URL}&page={page}&page_size=10";
+        var url = $"{BASE_SEARCH_URL}&{GetNutriScoreFilter(2)}&page={page}&page_size=10";
 
         var response = await client.GetAsync(url);
 
@@ -40,13 +40,23 @@ public class ProductServices
     public async Task<List<Product>> SearchProductAsync(string searchTerm)
     {
         var url = $"{BASE_SEARCH_URL}&tag_contains_0=contains&tagtype_0=categories" +
-            $"&tag_0={searchTerm}&tagtype_1=label&page_size=10";
+            $"&tag_0={searchTerm}&tagtype_1=label&{GetNutriScoreFilter(2)}&page_size=10";
 
         var response = await client.GetAsync(url);
 
-        var products = await GetProductAsync(response);
+        var productsSearch = await GetProductAsync(response);
 
-        return products;
+        return productsSearch;
+    }
+
+
+    private string GetNutriScoreFilter(int tagId)
+    {
+        var nutriScore = Settings.NutriScore;
+
+        return ("ALL" == nutriScore) 
+            ? string.Empty 
+            : $"tagtype_{tagId}=nutrition_grades&tag_contains_{tagId}=contains&tag_{tagId}={nutriScore}";
     }
 
 

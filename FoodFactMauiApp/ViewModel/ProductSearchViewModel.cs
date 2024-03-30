@@ -33,4 +33,13 @@ public partial class ProductSearchViewModel: BaseViewModel
         });
     }
 
+
+    [RelayCommand]
+    void ClearSearchTermsHistory()
+    {
+        SearchTermsHistory.Clear();
+
+        IsSearchTermsHistoryEmpty = true;
+    }
+
 }

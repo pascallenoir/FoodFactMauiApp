@@ -89,10 +89,10 @@ public partial class ProductViewModel : BaseViewModel
 
             SearchedProdutcs.Clear();
 
-            var searchs = await productServices.SearchProductAsync(SearchTerm);
-            foreach (var item in searchs)
+            var prodducts = await productServices.SearchProductAsync(SearchTerm);
+            foreach (var itemProduct in prodducts)
             {
-                SearchedProdutcs.Add(item);
+                SearchedProdutcs.Add(itemProduct);
             }
                 
             SearchTerm = null;
